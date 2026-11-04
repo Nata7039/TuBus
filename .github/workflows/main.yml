@@ -2,7 +2,7 @@ name: Compilar APK de Android
 
 on:
   push:
-    branches: [ "main" ] # Cambia a "master" si tu rama principal se llama así
+    branches: [ "main" ]
 
 jobs:
   build:
@@ -16,16 +16,19 @@ jobs:
       uses: actions/setup-java@v4
       with:
         distribution: 'temurin'
-        java-version: '17' # Cambia a '11' o '21' según la versión que use tu proyecto
+        java-version: '17'
 
     - name: Dar permisos de ejecución a Gradle
       run: chmod +x gradlew
+      working-directory: tubus-android # <-- Reemplaza con el nombre de tu carpeta
 
     - name: Compilar APK (Debug)
       run: ./gradlew assembleDebug
+      working-directory: tubus-android # <-- Reemplaza con el nombre de tu carpeta
 
     - name: Guardar APK como Artefacto
       uses: actions/upload-artifact@v4
       with:
         name: app-debug-apk
-        path: app/build/outputs/apk/debug/app-debug.apk
+        path: tubus-android/app/build/outputs/apk/debug/app-debug.apk # <-- También ponlo aquí al inicio de la ruta
+
